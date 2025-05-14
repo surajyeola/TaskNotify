@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deadline Notifications</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Helvetica Neue', Arial, sans-serif; /* Modern font */
+        background-color: #f5f5f5; /* Light grey background for the body */
+        color: #333;
+        line-height: 1.6;
+        display: flex; /* Flexbox layout */
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center; /* Center elements horizontally */
+        height: 100vh; /* Full viewport height */
+        justify-content: center; /* Center elements vertically */
+    }
+
+    h1 {
+        font-size: 3em; /* Adjusted font size */
+        color: #007BFF; /* Primary color for the heading */
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        margin-bottom: 20px; /* Space below the heading */
+        text-align: center; /* Centered heading */
+    }
+
+    form {
+        max-width: 1000px; /* Max-width for the form */
+        width: 100%; /* Full width for responsiveness */
+        background: white; /* Keep the background of the form white */
+        padding: 40px; /* Generous padding for comfort */
+        border-radius: 12px; /* Rounded corners */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Softer shadow */
+        transition: transform 0.2s ease; 
+    }
+
+    form:hover {
+        transform: translateY(-2px); /* Lift effect on hover */
+    }
+
+    form h3 {
+        font-size: 1.5em; 
+        margin-bottom: 20px; 
+        color: #007BFF; /* Consistent heading color */
+        border-bottom: 2px solid #e0e0e0; 
+        padding-bottom: 10px; 
+    }
+
+    label {
+        font-size: 0.9em;
+        margin-bottom: 8px;
+        display: block;
+        color: #555;
+        font-weight: 600; /* Bold labels */
+    }
+
+    input[type="text"],
+    input[type="file"] {
+        width: 100%;
+        padding: 12px; 
+        margin-bottom: 20px; 
+        border: 1px solid #ccc;
+        border-radius: 6px; /* More rounded corners */
+        font-size: 1em;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+    }
+
+    input[type="text"]:focus,
+    input[type="file"]:focus {
+        border-color: #007BFF; /* Blue border on focus */
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Shadow effect on focus */
+        outline: none; 
+    }
+
+    button {
+        width: 100%;
+        padding: 14px; 
+        background-color: #007BFF; /* Primary button color */
+        border: none;
+        border-radius: 6px; 
+        color: white;
+        font-size: 1.1em; 
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease; 
+    }
+
+    button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+        transform: translateY(-2px); 
+    }
+
+    button:active {
+        transform: translateY(0); 
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 15px; 
+    }
+
+    .flash-messages {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 15px;
+        background-color: #d4edda; /* Light green for success */
+        border: 1px solid #c3e6cb;
+    } 
+</style>
+
+<body>
+    <h1>Deadline Notifications</h1>
+    <form action="/send_deadline_notifications" method="POST" enctype="multipart/form-data">
+        <ul>
+            <div>
+                <h3>Schedule Deadline Notifications</h3>
+                <li><label for="mail-title">Subject:</label></li>
+                <input type="text" id="mail-title" name="mail_title" required>
+                <li><label for="mail-body">Body:</label></li>
+                <input type="text" id="mail-body" name="mail_body" required>
+            </div>
+            <div>
+                <h3>Add file (.xlsx, .csv)</h3>
+                <input type="file" id="data-sheet" name="data_sheet" accept=".xlsx, .csv" required>
+            </div>
+            <li><button type="submit">Schedule Emails</button></li>
+        </ul>
+    </form>
+    <br><br>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li style="color: green;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
